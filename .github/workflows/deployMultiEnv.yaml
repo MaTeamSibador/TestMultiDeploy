@@ -34,4 +34,4 @@ jobs:
     steps:
     - name: Report Env
       run: |
-        cat ${{ APPLICATION_NAME}}
+        echo "${{ APPLICATION_NAME }}"
