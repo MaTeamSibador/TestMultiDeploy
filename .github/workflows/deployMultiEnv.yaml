@@ -9,11 +9,12 @@ jobs:
 
     outputs:
       listenvs: ${{ steps.listenvs.output.listenvs}}
+      colors: ${{ steps.listens.output.colors}}
     steps:
       - name: Define list environments
         id: listenvs
         run: |
-          listenvs="$(gh api repos/$OWNER/$REPO/environments|jq -c '[.environments[].name|tostring]')"
+          listenvs="$(gh api repos/$OWNER/$REPO/environments|jq -c '[.environments[].name|tojson]')"
           echo 'colors=["red", "green", "blue"]' >> "$GITHUB_OUTPUT"
           echo 'listenvs='$listenvs >> "$GITHUB_OUTPUT"
         env:
