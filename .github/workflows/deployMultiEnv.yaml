@@ -16,11 +16,14 @@ jobs:
           listenvs="$(gh api repos/$OWNER/$REPO/environments| 
           jq -c '[.environments[].name|tostring]')"
 
-          echo 'listenvs='$listenvs >> $GITHUB_OUTPUT
+          echo 'listenvs='$listenvs >> "$GITHUB_OUTPUT"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           OWNER: ${{ github.repository_owner }}
           REPO: ${{ github.event.repository.name }}
+      
+      - name: Show output 
+         run: echo ${{ steps.listenvs.outputs.listenvs }}
 
   deploy-application:
     runs-on: ubuntu-latest
