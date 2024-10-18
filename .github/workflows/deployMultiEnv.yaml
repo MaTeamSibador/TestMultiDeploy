@@ -1,0 +1,32 @@
+name: shared matrix
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  list-environments:
+    runs-on: ubuntu-latest
+
+    outputs:
+      listenvs: ${{ steps.listenvs.output.listenvs}}
+    steps:
+      - name: Define list environments
+        id: listenvs
+        run: |
+          listenvs="$(gh api repos/$ORG/$REPO/environments| 
+          jq -c '[.environments[].name|tostring]')"
+
+          echo 'listenvs='$listenvs >> $GITHUB_OUTPUT
+
+  deploy-application:
+    runs-on: ubuntu-latest
+    needs:
+    - list-environments
+    strategy:
+      matrix:
+        environments: ${{ fromJSON(needs.list-environments.outputs.listenvs) }}
+
+    steps:
+    - name: Report Env
+      run: |
+        cat environments
