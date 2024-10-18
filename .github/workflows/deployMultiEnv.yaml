@@ -8,15 +8,16 @@ jobs:
     runs-on: ubuntu-latest
 
     outputs:
-      listenvs: ${{ steps.listenvs.output.listenvs}}
-    steps:
-      - name: Define list environments
-        id: listenvs
-        run: |
-          listenvs="$(gh api repos/$ORG/$REPO/environments| 
-          jq -c '[.environments[].name|tostring]')"
+      colors: ${{ steps.colors.outputs.colors }}
+      listenvs: ${{ steps.colors.outputs.listenvs}}
 
-          echo 'listenvs='$listenvs >> $GITHUB_OUTPUT
+    steps:
+      - name: Define Colors
+        id: colors
+        run: |
+          lists="$(gh api repos/$OWNER/$REPO/environments|jq -c '[.environments[].name|tostring]')"
+          echo 'colors=["red", "green", "blue"]' >> "$GITHUB_OUTPUT"
+          echo 'listenvs='$lists >> "$GITHUB_OUTPUT"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           OWNER: ${{ github.repository_owner }}
@@ -28,9 +29,11 @@ jobs:
     - list-environments
     strategy:
       matrix:
-        environments: ${{ fromJSON(needs.list-environments.outputs.listenvs) }}
+        environment: ${{ fromJSON(needs.list-environments.outputs.listenvs) }}
+    environment: ${{ matrix.environment }}
 
     steps:
     - name: Report Env
       run: |
-        cat environments
+        echo "${{ matrix.environment }}"
+        echo "${{ vars.APPLICATION_NAME }}"
