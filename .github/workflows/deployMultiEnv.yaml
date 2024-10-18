@@ -8,22 +8,10 @@ jobs:
     runs-on: ubuntu-latest
 
     outputs:
-      colors: ${{ steps.listens.output.colors}}
-    steps:
-      - name: Define list environments
-        id: listenvs
-        run: |
-          echo 'colors=["red", "green", "blue"]' >> "$GITHUB_OUTPUT"
- 
-  deploy-application:
-    runs-on: ubuntu-latest
-    needs:
-    - list-environments
-    strategy:
-      matrix:
-        envv: ${{ fromJSON(needs.list-environments.outputs.listenvs) }}
+      colors: ${{ steps.colors.outputs.colors }}
 
     steps:
-    - name: Report Env
-      run: |
-        cat environments
+      - name: Define Colors
+        id: colors
+        run: |
+          echo 'colors=["red", "green", "blue"]' >> "$GITHUB_OUTPUT"
