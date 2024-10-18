@@ -1,4 +1,4 @@
-name: shared matrix
+name: shared matrix exemple
 on:
   push:
   workflow_dispatch:
