@@ -29,9 +29,10 @@ jobs:
     - list-environments
     strategy:
       matrix:
-        environments: ${{ fromJSON(needs.list-environments.outputs.listenvs) }}
+        environment: ${{ fromJSON(needs.list-environments.outputs.listenvs) }}
 
     steps:
     - name: Report Env
       run: |
+        echo "${{ matrix.environment }}"
         echo "${{ APPLICATION_NAME }}"
