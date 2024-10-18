@@ -36,4 +36,4 @@ jobs:
     - name: Report Env
       run: |
         echo "${{ matrix.environment }}"
-        echo "${{ APPLICATION_NAME }}"
+
