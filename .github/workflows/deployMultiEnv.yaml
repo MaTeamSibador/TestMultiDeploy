@@ -8,12 +8,11 @@ jobs:
     runs-on: ubuntu-latest
 
     outputs:
-      colors: ${{ steps.colors.outputs.colors }}
-      listenvs: ${{ steps.colors.outputs.listenvs}}
+      listenvs: ${{ steps.listclients.outputs.listenvs}}
 
     steps:
-      - name: Define Colors
-        id: colors
+      - name: Define list Clients
+        id: listclients
         run: |
           lists="$(gh api repos/$OWNER/$REPO/environments|jq -c '[.environments[].name|tostring]')"
           echo 'colors=["red", "green", "blue"]' >> "$GITHUB_OUTPUT"
@@ -33,7 +32,7 @@ jobs:
     environment: ${{ matrix.environment }}
 
     steps:
-    - name: Report Env
+    - name: Deploiement application
       run: |
         echo "${{ matrix.environment }}"
         echo "${{ vars.APPLICATION_NAME }}"
