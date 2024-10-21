@@ -15,7 +15,6 @@ jobs:
         id: listclients
         run: |
           lists="$(gh api repos/$OWNER/$REPO/environments|jq -c '[.environments[].name|tostring]')"
-          echo 'colors=["red", "green", "blue"]' >> "$GITHUB_OUTPUT"
           echo 'listenvs='$lists >> "$GITHUB_OUTPUT"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
