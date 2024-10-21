@@ -1,6 +1,6 @@
 # Workflows pour déployer une application sur plusieurs clients
 
-[https://github.com/MaTeamSibador/TestMutltiDeploy/actions/workflows/deployMultiEnv.yaml/badge.svg]
+![Badge workflow](https://github.com/MaTeamSibador/TestMutltiDeploy/actions/workflows/deployMultiEnv.yaml/badge.svg)
 
 Nous avons besoins de déployer l'application pour plusieurs clients. Nous voulons que le pipeline soit dynamique. A chaque nouveau client nous ne modifions pas le pipeline.
 
